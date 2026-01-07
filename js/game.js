@@ -32,6 +32,12 @@ class Game {
         this.score = 0;
         this.lives = 3;
 
+        // Camera for smooth scrolling
+        this.camera = {
+            x: 0,
+            y: 0
+        };
+
         // UI elements
         this.menuScreen = document.getElementById('menuScreen');
         this.gameOverScreen = document.getElementById('gameOverScreen');
@@ -108,6 +114,10 @@ class Game {
             this.player.lives = this.lives;
             this.player.sound = this.sound;
         }
+
+        // Reset camera to start of level
+        this.camera.x = 0;
+        this.camera.y = 0;
 
         this.updateHUD();
     }
@@ -197,8 +207,28 @@ class Game {
             this.levelComplete();
         }
 
+        // Update camera to follow player
+        this.updateCamera();
+
         // Update HUD
         this.updateHUD();
+    }
+
+    updateCamera() {
+        // Center camera on player
+        // Keep player in the center of the screen
+        this.camera.x = this.player.x - this.width / 2 + this.player.width / 2;
+        this.camera.y = 0; // Keep vertical camera fixed (optional: could follow player vertically too)
+
+        // Clamp camera to level boundaries
+        // Don't scroll past the left edge
+        if (this.camera.x < 0) {
+            this.camera.x = 0;
+        }
+
+        // Don't scroll past the right edge (if level has a defined width)
+        // For now, allow unlimited scrolling to the right
+        // You can set a max based on level width if needed
     }
 
     render() {
@@ -206,13 +236,20 @@ class Game {
         this.ctx.clearRect(0, 0, this.width, this.height);
 
         if (this.state === this.STATES.PLAYING || this.state === this.STATES.PAUSED) {
+            // Save context and apply camera translation
+            this.ctx.save();
+            this.ctx.translate(-this.camera.x, -this.camera.y);
+
             // Render level
             this.currentLevel.render(this.ctx);
 
             // Render player
             this.player.render(this.ctx);
 
-            // Show pause message
+            // Restore context (remove camera translation)
+            this.ctx.restore();
+
+            // Show pause message (drawn without camera offset)
             if (this.state === this.STATES.PAUSED) {
                 this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
                 this.ctx.fillRect(0, 0, this.width, this.height);
