@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pranush's Adventure</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div id="hud">
+            <div id="score">Score: <span id="scoreValue">0</span></div>
+            <div id="lives">Lives: <span id="livesValue">3</span></div>
+            <div id="level">Level: <span id="levelValue">1</span></div>
+            <button id="soundToggle" title="Toggle Sound">🔊</button>
+        </div>
+        <div id="menuScreen" class="screen">
+            <h1>Pranush's Adventure</h1>
+            <p>Use Arrow Keys or WASD to move</p>
+            <p>Space to Jump</p>
+            <button id="startButton">Start Game</button>
+        </div>
+        <div id="gameOverScreen" class="screen hidden">
+            <h1>Game Over!</h1>
+            <p>Final Score: <span id="finalScore">0</span></p>
+            <button id="restartButton">Try Again</button>
+        </div>
+        <div id="levelCompleteScreen" class="screen hidden">
+            <h1>Level Complete!</h1>
+            <p>Score: <span id="levelScore">0</span></p>
+            <button id="nextLevelButton">Next Level</button>
+        </div>
+    </div>
+
+    <!-- Load game scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/sound.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/physics.js"></script>
+    <script src="js/platform.js"></script>
+    <script src="js/collectible.js"></script>
+    <script src="js/enemy.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/level.js"></script>
+    <script src="levels/level1.js"></script>
+    <script src="levels/level2.js"></script>
+    <script src="levels/level3.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

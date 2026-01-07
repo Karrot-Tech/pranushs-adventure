@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Backup files
+*_bkp.png
+*_old.png
+*_placeholder.png
+player_old.png
+player_placeholder.png
+
+# Editor files
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+create_placeholder.py
+create_placeholder.html
+
+# Large original images
+Gemini_Generated_Image_*.png
