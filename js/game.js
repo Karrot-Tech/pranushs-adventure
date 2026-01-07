@@ -171,7 +171,7 @@ class Game {
         Physics.checkPlatformCollision(this.player, this.currentLevel.platforms);
 
         // Check if player fell off the map
-        if (!Physics.checkBounds(this.player, this.width, this.height)) {
+        if (!Physics.checkBounds(this.player, this.height)) {
             this.playerDied();
             return;
         }
