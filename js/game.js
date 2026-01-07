@@ -240,8 +240,8 @@ class Game {
             this.ctx.save();
             this.ctx.translate(-this.camera.x, -this.camera.y);
 
-            // Render level
-            this.currentLevel.render(this.ctx);
+            // Render level (pass camera position for infinite background)
+            this.currentLevel.render(this.ctx, this.camera.x);
 
             // Render player
             this.player.render(this.ctx);

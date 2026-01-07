@@ -63,16 +63,20 @@ class Level {
         this.collectibles = this.collectibles.filter(c => c.active);
     }
 
-    render(ctx) {
-        // Draw background gradient
+    render(ctx, cameraX = 0) {
+        // Draw background gradient that extends infinitely
+        // Calculate the visible area based on camera position
+        const startX = Math.floor(cameraX / this.canvasWidth) * this.canvasWidth;
+        const endX = startX + this.canvasWidth * 3; // Draw 3 screens worth for smooth scrolling
+
         const gradient = ctx.createLinearGradient(0, 0, 0, this.canvasHeight);
         gradient.addColorStop(0, this.backgroundColors[0]);
         gradient.addColorStop(1, this.backgroundColors[1]);
         ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
+        ctx.fillRect(startX, 0, endX - startX, this.canvasHeight);
 
-        // Draw clouds (decorative)
-        this.drawClouds(ctx);
+        // Draw clouds (decorative) - repeating pattern
+        this.drawClouds(ctx, cameraX);
 
         // Draw goal flag
         this.drawGoal(ctx);
@@ -87,23 +91,32 @@ class Level {
         this.enemies.forEach(enemy => enemy.render(ctx));
     }
 
-    drawClouds(ctx) {
-        // Simple decorative clouds
+    drawClouds(ctx, cameraX = 0) {
+        // Simple decorative clouds with repeating pattern
         ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
 
-        const clouds = [
+        // Cloud pattern repeats every 800px
+        const cloudPattern = [
             { x: 100, y: 80, size: 40 },
             { x: 350, y: 120, size: 50 },
             { x: 600, y: 90, size: 45 }
         ];
 
-        clouds.forEach(cloud => {
-            ctx.beginPath();
-            ctx.arc(cloud.x, cloud.y, cloud.size * 0.5, 0, Math.PI * 2);
-            ctx.arc(cloud.x + cloud.size * 0.5, cloud.y, cloud.size * 0.6, 0, Math.PI * 2);
-            ctx.arc(cloud.x + cloud.size, cloud.y, cloud.size * 0.5, 0, Math.PI * 2);
-            ctx.fill();
-        });
+        // Calculate which cloud sections to draw based on camera
+        const startSection = Math.floor(cameraX / 800);
+        const endSection = startSection + 3; // Draw a few sections ahead
+
+        for (let section = startSection; section <= endSection; section++) {
+            const offsetX = section * 800;
+            cloudPattern.forEach(cloud => {
+                const cloudX = cloud.x + offsetX;
+                ctx.beginPath();
+                ctx.arc(cloudX, cloud.y, cloud.size * 0.5, 0, Math.PI * 2);
+                ctx.arc(cloudX + cloud.size * 0.5, cloud.y, cloud.size * 0.6, 0, Math.PI * 2);
+                ctx.arc(cloudX + cloud.size, cloud.y, cloud.size * 0.5, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
     }
 
     drawGoal(ctx) {
