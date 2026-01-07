@@ -28,6 +28,7 @@ class InputHandler {
     }
 
     setupEventListeners() {
+        // Keyboard events
         window.addEventListener('keydown', (e) => {
             const action = this.keyMap[e.code];
             if (action) {
@@ -43,6 +44,49 @@ class InputHandler {
                 this.keys[action] = false;
             }
         });
+
+        // Touch controls for mobile
+        this.setupTouchControls();
+    }
+
+    setupTouchControls() {
+        // Get mobile control buttons
+        const leftBtn = document.getElementById('leftBtn');
+        const rightBtn = document.getElementById('rightBtn');
+        const jumpBtn = document.getElementById('jumpBtn');
+
+        if (leftBtn) {
+            leftBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.keys['left'] = true;
+            });
+            leftBtn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.keys['left'] = false;
+            });
+        }
+
+        if (rightBtn) {
+            rightBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.keys['right'] = true;
+            });
+            rightBtn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.keys['right'] = false;
+            });
+        }
+
+        if (jumpBtn) {
+            jumpBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.keys['jump'] = true;
+            });
+            jumpBtn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.keys['jump'] = false;
+            });
+        }
     }
 
     isPressed(action) {

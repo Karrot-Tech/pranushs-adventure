@@ -4,11 +4,20 @@ A fun 2D platformer game built with HTML5 Canvas and vanilla JavaScript, featuri
 
 ## How to Play
 
+### Desktop
 1. Open `index.html` in your web browser
 2. Use **Arrow Keys** or **WASD** to move left and right
 3. Press **Space** to jump
 4. Press **P** to pause the game
 5. Click the **🔊 button** in the top-right to toggle sound effects
+
+### Mobile
+1. Open the game in your mobile browser
+2. Use the **◀ ▶ buttons** at the bottom-left to move left and right
+3. Tap the **JUMP button** at the bottom-right to jump
+4. Touch controls automatically appear on mobile devices
+
+### Gameplay
 6. Collect coins for points
 7. Stomp on enemies by jumping on them
 8. Grab power-ups to grow bigger and stronger
